@@ -10,4 +10,4 @@ RUN npm run build
 FROM gcr.io/distroless/nodejs18
 WORKDIR /app
 COPY --from=builder /app/build .
-# CMD ["index.js"]
+ENTRYPOINT ["node","index.js"]
