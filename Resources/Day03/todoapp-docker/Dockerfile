@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20 AS build-env
+FROM node:18 AS builder
 
 WORKDIR /app
 
@@ -13,9 +13,5 @@ RUN npm run build
 FROM gcr.io/distroless/nodejs20-debian11
 
 WORKDIR /app
-
-COPY --from=build-env /app .
-
-EXPOSE 3000
-
-ENTRYPOINT ["node", "src/index.js"]
+COPY --from=builder /app/build .
+ENTRYPOINT ["node","index.js"]
