@@ -1,13 +1,21 @@
-# Stage 1: Build the application
-FROM node:18 AS builder
+# Build stage
+FROM node:20 AS build-env
+
 WORKDIR /app
+
 COPY package*.json ./
-RUN npm install
+RUN npm install --omit=dev
+
 COPY . .
 RUN npm run build
 
-# Stage 2: Create the Distroless image
-FROM gcr.io/distroless/nodejs18
+# Production stage
+FROM gcr.io/distroless/nodejs20-debian11
+
 WORKDIR /app
-COPY --from=builder /app/build .
-# CMD ["index.js"]
+
+COPY --from=build-env /app .
+
+EXPOSE 3000
+
+ENTRYPOINT ["node", "src/index.js"]
