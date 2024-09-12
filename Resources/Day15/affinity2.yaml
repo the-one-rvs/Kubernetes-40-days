@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: mypod-2
+  labels:
+    env: prod
+spec:
+  containers:
+    - name: redis
+      image: redis
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+            - key: disktype
+              operator: Exists
+          
+        
+        
+    
+  # nodeName: cka-cluster2-worker

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+    name: mypod
+    
+spec:
+  containers:
+  - name: mypod
+    image: nginx
+    # resources:
+    #   limits:
+    #     memory: "128Mi"
+    #     cpu: "500m"
+    env:
+    - name: ENV
+      valueFrom:
+        configMapKeyRef:
+          name: app-cm
+          key: environment
+    ports:
+      - containerPort: 5001

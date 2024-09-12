@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: mypod
+  labels:
+    env: prod
+spec:
+  containers:
+    - name: redis
+      image: redis
+  tolerations:
+  - key: "gpu"
+    value: "true"
+    operator: "Equal"
+    effect: "NoSchedule"
+  # nodeName: cka-cluster2-worker

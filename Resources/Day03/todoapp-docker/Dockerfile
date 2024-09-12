@@ -1,17 +1,16 @@
 # Build stage
-FROM node:18 AS builder
+FROM node:20 AS builder
 
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm install --omit=dev
-
+RUN npm install
 COPY . .
 RUN npm run build
 
 # Production stage
-FROM gcr.io/distroless/nodejs20-debian11
+FROM nginx:alpine
 
-WORKDIR /app
-COPY --from=builder /app/build .
-ENTRYPOINT ["node","index.js"]
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
