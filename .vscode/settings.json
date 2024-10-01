@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/v1@secret": "file:///home/vaibhav/CKA-2024/Resources/Day25/sc.yaml"
+    }
+}
